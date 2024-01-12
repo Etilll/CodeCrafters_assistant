@@ -1,5 +1,4 @@
-
-class Id_format:
+class IdFormat:
     def input_to_id(self, text):
         map = {' ':'','\n':'','\t':'','\r':''}
         new_line = text.translate(map)
@@ -10,6 +9,49 @@ class Id_format:
                 return self.translate_string('negative_id_error','yellow','green')
         except ValueError:
             return self.translate_string('wrong_id_error','yellow','green')
+
+class ListConstructor: #shall never be called from the record class
+    def get_data(self, record_id:int, mode=None):
+        elements = {}
+        if record_id in self.data.keys():
+            elements["intro"] = f"{self.RED}{record_id}{self.GREEN}. "
+            elements["mode"] = "string"
+            counter = 0
+            for value in self.data[record_id].data.values():
+                if not mode:
+                    elements[counter] = [self.translate_string('attr_' + str(counter),'red','green')]
+                    elements[counter].append(None)
+                    if type(value) != dict:
+                        elements[counter].append(f"{value}; ")
+                    else:
+                        elements[counter].append(f"{'; '.join(dict_item for dict_item in value.values())}; ")
+                elif mode == 'attributes':
+                    elements[counter] = [self.translate_string('print_attr_' + str(counter),'green')]
+                    elements[counter].append(None)
+                    elements[counter].append(None)
+                counter += 1
+        return elements
+    
+    def create_list(self, data:dict):
+        string = data["intro"]
+        technical = ["intro", "mode"]
+        for name,param in data.items():
+            if name in technical:
+                continue
+            if data["mode"] == "list":
+                string += f"{self.RED}{name}{self.GREEN}. {param[0]}"
+            else:
+                string += f"{param[0]}"
+            if param[1]:
+                string += f"{param[1]}"
+            elif param[2]:
+                string += ": "
+            if param[2]:
+                string += f"{param[2]}"
+            if data["mode"] == "list":
+                string += "\n"
+
+        return string
 
 class DialogueConstructor:
     def dialogue_constructor(self,cfg:dict):
@@ -48,7 +90,7 @@ class DialogueConstructor:
                                             'technical':True,
                                                 'methods':{self.args_dummy:{'prompt':phrase_data["prompt"]}}}
             self.start_script('get_input', mode='technical') #get input here
-        if self.args == None:
+        if self.args == None or 'leave' in self.args or 'cancel' in self.args:
             return "abort"
         result = None
         if phrase_data["checks"] == {}:
@@ -90,8 +132,12 @@ class DialogueConstructor:
         if phrase_data["checks"] == {}:
             if type(phrase_data["string"]) == str:
                 print(phrase_data["string"])
-            else:
-                print(phrase_data["string"]())
+            elif type(phrase_data["string"]) == dict:
+                for method,arguments in phrase_data["string"].items():
+                    if arguments != []:
+                        print(method(arguments))
+                    else:
+                        print(method())
             return True
         else:
             for method,arguments in phrase_data["checks"].items():
@@ -108,8 +154,12 @@ class DialogueConstructor:
             
             if type(phrase_data["string"]) == str:
                 print(phrase_data["string"])
-            else:
-                print(phrase_data["string"]())
+            elif type(phrase_data["string"]) == dict:
+                for method,arguments in phrase_data["string"].items():
+                    if arguments != []:
+                        print(method(arguments))
+                    else:
+                        print(method())
 
     def args_dummy(self, *args):
         self.phrase_started = True
@@ -117,7 +167,106 @@ class DialogueConstructor:
         for k in args:
             self.args.append(k) #saves user input
 
+class DialogueActions:
+    def print_records(self, string:str):
+        string = string[0]
+        for contact_id in self.data.keys():
+            string += f"\n{self.create_list(self.get_data(contact_id))}"
+        return string 
+ 
+    def remove_record_ask(self, string:str):
+        string = string[0]
+        string += f"\n{self.create_list(self.get_data(self.ongoing))}\n{self.GREEN}?"
+        return string
+
+    def set_current_record_id(self,record_id):
+        self.ongoing = self.input_to_id(self.single_param(record_id))
+        
+    def set_current_field_id(self,field_id):
+        self.field_id = self.input_to_id(self.single_param(field_id))
+        
+    def single_param(self, param):
+        return param[0][0]
+
+    def print_record_attributes(self, *args):
+        tmp = self.get_data(self.ongoing, mode='attributes')
+        tmp['intro'] = ''
+        tmp['mode'] = 'list'
+        return self.create_list(tmp)
+ 
+    def remove_attribute_ask(self, *args):
+        return f"{self.translate_string('remove_attribute_ask_p0','yellow')} {self.translate_string(f'print_attr_{self.field_id}','red')} {self.translate_string('remove_attribute_ask_p1','yellow','green')}"
+
+    def add_record_finish(self, *args):
+        record = self.data[self.ongoing]
+        print(record)
+
+        self.update_file(mode="add", r_id=self.generated_ids)
+        self.ongoing = None
+
+    def current_reset_and_save(self, *args):
+        self.update_file(mode="ed")
+        self.field_id = None
+        self.ongoing = None
+           
+    def print_choose_edit(self, *args):
+        return self.translate_string('print_attributes', 'green') + ':'
+ 
+class DialogueChecks:
+    def data_not_empty(self, *args):
+        if len(self.data) > 0:
+            return True
+        else:
+            return self.translate_string('list_empty','yellow','green')
+
+    def correct_record_id(self, record_id):
+        record_id = self.input_to_id(self.single_param(record_id))
+        if (type(record_id) == int) and (record_id in self.data.keys()):
+            return True
+        elif type(record_id) == str:
+            return record_id
+        else:
+            return self.translate_string('record_id_not_found','yellow','green')
+
+    def correct_field_id(self, field_id):
+        field_id = self.input_to_id(self.single_param(field_id))
+        record = self.data[self.ongoing]
+        if (type(field_id) == int) and (field_id <= (len(record.data) - 1)):
+            return True
+        elif type(field_id) == str:
+            return field_id
+        else:
+            return self.translate_string('wrong_id_error','yellow','green')
+
+    def correct_find_option(self, field_id):
+        field_id = self.input_to_id(self.single_param(field_id))
+        for v in self.data.values():
+            if (type(field_id) == int) and (field_id <= len(v.data)):
+                return True
+            elif type(field_id) == str:
+                return field_id
+            else:
+                return self.translate_string('wrong_id_error','yellow','green')
+        
+    def correct_edit_dict_option(self, option):
+        option = self.input_to_id(self.single_param(option))
+        if (type(option) == int) and (option == 0 or option == 1):
+            return True
+        elif type(option) == str:
+            return option
+        else:
+            return self.translate_string('wrong_id_error','yellow','green')
+
 class Translate:
+    HEADER = '\033[95m'
+    BLUE = '\033[94m'
+    CYAN = '\033[96m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    DEFAULT = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
     def translate_string(self,string:str,st_color=None,end_color=None, mode=None):
         string = str(string).strip().lower()
         local = None
@@ -227,10 +376,48 @@ class DataSaver:
                         self.record_cnt = id_generator
                         #print('Reached the end of file!')
 
-class Utils(DataSaver, Id_format, DialogueConstructor):
+class FindConstructor:
+    def constructor(self, data:dict):
+        string = data["intro"]
+        technical = ["intro", "what", "where"]
+        check = False
+        where = None
+        for name,param in data.items():
+            if name in technical:
+                continue
+            if data['where'] != "all" and data['where'] != name:
+                string += f"{param[0]}: {param[1]}"
+            else:
+                if data['where'] == "all":
+                    where = data[name][1]
+                else:
+                    where = data[data['where']][1]
+                highlighted = ''
+                if self.find_in(where,data['what']):
+                    check = True
+                    highlighted = f"{self.GREEN}{where[:self.find_in(where,data['what'])[0]]}{self.YELLOW}{where[self.find_in(where,data['what'])[0]:self.find_in(where,data['what'])[1]]}"
+                    cut_where = where[self.find_in(where,data['what'])[1]:]
+                    while self.find_in(cut_where,data['what']):
+                        highlighted += f"{self.GREEN}{cut_where[:self.find_in(cut_where,data['what'])[0]]}{self.YELLOW}{cut_where[self.find_in(cut_where,data['what'])[0]:self.find_in(cut_where,data['what'])[1]]}"
+                        cut_where = cut_where[self.find_in(cut_where,data['what'])[1]:]
+                    
+                    if cut_where != "":
+                        highlighted += f"{self.GREEN}{cut_where}"
+                    else:
+                        highlighted += self.GREEN
+                    string += f"{param[0]}: {highlighted}"
+                else:
+                    string += f"{param[0]}: {param[1]}"
+
+        if check == True:
+            return string
+        else:
+            return False
+
+class Utils(DataSaver, IdFormat, DialogueConstructor, FindConstructor, ListConstructor):
     def dialogue_check(self,variable):
         variable = self.single_param(variable)
-        if variable.lower() != 'n':
+        if not variable.lower() in self.parent.deny:
             return True
         return False
  
@@ -264,53 +451,3 @@ class Utils(DataSaver, Id_format, DialogueConstructor):
                 return search(what,phones).span()
             else:
                 return False
-  
-
-class bcolors:
-    HEADER = '\033[95m'
-    BLUE = '\033[94m'
-    CYAN = '\033[96m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    RED = '\033[91m'
-    DEFAULT = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    
-class RecordConstructor:
-    def constructor(self, data:dict):
-        string = data["intro"]
-        technical = ["intro", "what", "where"]
-        check = False
-        where = None
-        for name,param in data.items():
-            if name in technical:
-                continue
-            if data['where'] != "all" and data['where'] != name:
-                string += f"{param[0]}: {param[1]}"
-            else:
-                if data['where'] == "all":
-                    where = data[name][1]
-                else:
-                    where = data[data['where']][1]
-                highlighted = ''
-                if self.find_in(where,data['what']):
-                    check = True
-                    highlighted = f"{bcolors.GREEN}{where[:self.find_in(where,data['what'])[0]]}{bcolors.YELLOW}{where[self.find_in(where,data['what'])[0]:self.find_in(where,data['what'])[1]]}"
-                    cut_where = where[self.find_in(where,data['what'])[1]:]
-                    while self.find_in(cut_where,data['what']):
-                        highlighted += f"{bcolors.GREEN}{cut_where[:self.find_in(cut_where,data['what'])[0]]}{bcolors.YELLOW}{cut_where[self.find_in(cut_where,data['what'])[0]:self.find_in(cut_where,data['what'])[1]]}"
-                        cut_where = cut_where[self.find_in(cut_where,data['what'])[1]:]
-                    
-                    if cut_where != "":
-                        highlighted += f"{bcolors.GREEN}{cut_where}"
-                    else:
-                        highlighted += bcolors.GREEN
-                    string += f"{param[0]}: {highlighted}"
-                else:
-                    string += f"{param[0]}: {param[1]}"
-
-        if check == True:
-            return string
-        else:
-            return False

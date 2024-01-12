@@ -8,6 +8,7 @@
    		<confirm_long text="Yes"/>
    		<deny text="N"/>
    		<deny_long text="No"/>
+   		<stop text="Stop"/>
    		<change_language_desc text="Sets the programm's language."/>
    		<change_language_list text="Languages available:"/>
    		<change_module_desc text="Allows you to switch to a different menu."/>
@@ -51,6 +52,9 @@
    		<enter_edit text="what you are going to edit"/>
    		<enter_remove text="what you are going to remove"/>
    		<enter_new_text text="new text"/>
+
+   		<list_empty text="No saved records!"/>
+   		<record_id_not_found text="There is no record with this id, try again!"/>
 	</default>
 	<contact_book>
 		<!--Contact manager-specific commands start-->
@@ -97,24 +101,22 @@
    		<not_found_birthdays_p0 text="No contacts found, with a birthday in the next"/>
    		<not_found_birthdays_p1 text="days:"/>
 
-   		<contact_list_empty text="Contact list is empty!"/>
-
    		<print_contacts text="Saved contacts list"/>
 
-   		<print_contact_attr_p0 text="Choose the number of the value, which you are going to edit"/>
-   		<print_contact_attr_p1 text="Contact name"/>
-   		<print_contact_attr_p2 text="The birthday"/>
-   		<print_contact_attr_p3 text="The email"/>
-   		<print_contact_attr_p4 text="The address"/>
-   		<print_contact_attr_p5 text="The phone numbers"/>
-		<print_contact_attr_p5_1 text="The phone number"/>
+   		<print_attributes text="Choose the number of the value, which you are going to edit"/>
+   		<print_attr_0 text="Contact name"/>
+   		<print_attr_1 text="The birthday"/>
+   		<print_attr_2 text="The email"/>
+   		<print_attr_3 text="The address"/>
+   		<print_attr_4 text="The phone numbers"/>
+		<print_attr_4_1 text="The phone number"/>
 
-   		<contact_attr_p1 text="Name"/>
-   		<contact_attr_p2 text="Birthday"/>
-   		<contact_attr_p3 text="Email"/>
-   		<contact_attr_p4 text="Address"/>
-   		<contact_attr_p5 text="Phone numbers"/>
-   		<contact_attr_p5_1 text="Phone number"/>
+   		<attr_0 text="Name"/>
+   		<attr_1 text="Birthday"/>
+   		<attr_2 text="Email"/>
+   		<attr_3 text="Address"/>
+   		<attr_4 text="Phone numbers"/>
+   		<attr_4_1 text="Phone number"/>
 
    		<contact_attr_add_p1 text="Contact created with name"/>
    		<contact_attr_add_p2 text="Birthday"/>
@@ -133,7 +135,6 @@
    		<remove_attribute_ask_p0 text="Do you really want to delete the"/>
    		<remove_attribute_ask_p1 text="of the contact?"/>
 		
-   		<contact_id_not_found text="There is no contact with this id, try again!"/>
    		<negative_id_error text="An id cannot be a negative number!"/>
    		<wrong_id_error text="Wrong id, try again!"/>
 
@@ -161,7 +162,6 @@
 		<!--Record manager-specific commands start-->
    		<unnamed_contact text="Unnamed contact"/>
    		<none text="none"/>
-   		<record_name text="Record name"/>
    		<no_birthday text="Birthday is not set in this record. Please, use the function for adding birthday instead."/>
    		<no_email text="Email is not set in this record. Please, use the function for adding an email instead."/>
    		<phone_added_p0 text="Phone added. if you want to add another one, enter it in the console. When you are done, just enter '"/>
@@ -204,12 +204,15 @@
    		<none text="none"/>
 
    		<print_notes text="Saved notes list"/>
-   		<print_note_attr text="Choose the number of the value, which you are going to edit"/>
+   		<print_attributes text="Choose the number of the value, which you are going to edit"/>
+   		<print_attr_0 text="Title"/>
+   		<print_attr_1 text="Text"/>
+   		<print_attr_2 text="Tags"/>
 
-   		<note_attr_p0 text="Title"/>
-   		<note_attr_p1 text="Text"/>
-   		<note_attr_p2 text="Tags"/>
-   		<note_attr_p2_1 text="Tag"/>
+   		<attr_0 text="Title"/>
+   		<attr_1 text="Text"/>
+   		<attr_2 text="Tags"/>
+   		<attr_2_1 text="Tag"/>
 
    		<what_to_delete_p0 text="What do you want to delete:"/>
    		<what_to_delete_p1 text="The note itself."/>
@@ -225,9 +228,9 @@
    		<note_manager_name text="note manager"/>
    		<note_manager_desc text="note manager"/>
    		<create_desc text="Adds a new record to the note book. You can add a title, text, tags - either when creating a record, or later."/>
-   		<note_attr_p0 text="title"/>
-   		<note_attr_p1 text="text"/>
-   		<note_attr_p2 text="tag"/>
+   		<enter_title text="title"/>
+   		<enter_text text="text"/>
+   		<enter_tag text="tag"/>
    		<edit_desc text="Edits the title/text/tags of a note. Adds a new tag."/>
    		<choose_note text="number of a note you want to edit"/>
    		<choose_note_to_remove text="number of a note you want to delete"/>
@@ -245,9 +248,7 @@
    		<choose_tag_to_del text="the tag you are going to delete"/>
    		<show_all_desc text="Displays the contents of the note book."/>
 
-   		<note_list_empty text="Note list is empty!"/>
    		<choose_what_to_edit text="Choose, what you are going to edit"/>
-   		<note_id_not_found text="There is no note with this id, try again!"/>
    		<edited text="edited."/>
    		<choose_the_tag text="Choose the tag you need"/>
    		<no_tags text="The note has no tags!"/>

@@ -1,13 +1,13 @@
-from CodeCrafters_assistant.utils import Id_format, Translate, bcolors
+from CodeCrafters_assistant.utils import IdFormat, Translate
 from CodeCrafters_assistant.contact_book import ContactBook
-from CodeCrafters_assistant.notes import NoteFile
+from CodeCrafters_assistant.notes import NoteBook
 from CodeCrafters_assistant.sorting import FileSorter
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.styles import Style
 import xml.etree.ElementTree as ET
 
-class InputManager(Id_format, Translate):
+class InputManager(IdFormat, Translate):
     def __init__(self):
         # Тут завантажуємо дані з файла (якщо він є. Якщо немає - викликаємо функцію, що його створить і заповнить "скелетом" даних для збереження)
         # Тут же ініціалізуємо технічні змінні для цього класу.
@@ -25,7 +25,7 @@ class InputManager(Id_format, Translate):
         self.command = 'change_language'
         self.modules = []
         self.contactbook = ContactBook(self)
-        self.notepad = NoteFile(self)
+        self.notepad = NoteBook(self)
         self.sorter = FileSorter(self)
         
         self.reinit(mode='first')
@@ -51,6 +51,7 @@ class InputManager(Id_format, Translate):
         self.deny = ['n','no']
         self.deny.append(self.translate_string('deny').lower())
         self.deny.append(self.translate_string('deny_long').lower())
+        self.stop = [self.translate_string('stop').lower()]
         self.actions['default'] = {}
         self.actions['default']["change_language"] = { 
                                            'description':"change_language_desc", 
@@ -89,13 +90,13 @@ class InputManager(Id_format, Translate):
     
     def print_languages(self):
         string = self.translate_string('change_language_list','green')
-        string += '\n' + '\n'.join(f'{bcolors.RED}{key}{bcolors.GREEN}. {value}' for key, value in self.languages_local.items()) + '\n'
+        string += '\n' + '\n'.join(f'{self.RED}{key}{self.GREEN}. {value}' for key, value in self.languages_local.items()) + '\n'
         print(string)
     
     def print_modules(self):
         self.module_chosen = None
         string = self.translate_string('print_module_p0','green') + ':\n'
-        string += '\n'.join(f"{bcolors.RED}{self.modules.index(key)}{bcolors.GREEN}. {self.translate_string('print_module_p1')} {self.translate_string(key.method_table['__localization']['name'],'red','green',mode=self.modules.index(key))} {self.translate_string('print_module_p2')} '{bcolors.RED}{self.modules.index(key)}{bcolors.GREEN}' {self.translate_string('print_module_p3')}" for key in self.modules) + '\n'
+        string += '\n'.join(f"{self.RED}{self.modules.index(key)}{self.GREEN}. {self.translate_string('print_module_p1')} {self.translate_string(key.method_table['__localization']['name'],'red','green',mode=self.modules.index(key))} {self.translate_string('print_module_p2')} '{self.RED}{self.modules.index(key)}{self.GREEN}' {self.translate_string('print_module_p3')}" for key in self.modules) + '\n'
         print(string)
 
     def set_module(self,module_id):
@@ -151,14 +152,14 @@ class InputManager(Id_format, Translate):
         while True:
             if self.menu_delay:
                 while True: 
-                    self.command = input(f"{self.translate_string('enter_back_p0','cyan')} {self.translate_string('enter_back_p1','red','cyan')}{self.translate_string('enter_back_p2')}:   {bcolors.RED}")
+                    self.command = input(f"{self.translate_string('enter_back_p0','cyan')} {self.translate_string('enter_back_p1','red','cyan')}{self.translate_string('enter_back_p2')}:   {self.RED}")
                     if self.command.lower() in self.confirm:
                         self.menu_delay = None
                         break
             if self.command == '':
                 if self.module_chosen != None:
                     string = f"{self.translate_string('menu_entered_p0','green')} {self.translate_string(self.modules[self.module_chosen].method_table['__localization']['name'], 'red', 'green')}{self.translate_string('menu_entered_p1')}\n"
-                    string += "\n".join(f"{'  '}{bcolors.RED}{key}{bcolors.GREEN} - {self.translate_string(value['description'])}" for key, value in self.actions[self.module_chosen].items()) + f"\n{'  '}{bcolors.RED}back{bcolors.GREEN} - {self.translate_string('return_to_main')}. \n{'  '}{bcolors.RED}leave{bcolors.GREEN} - {self.translate_string('exit')}. \n{'  '}{bcolors.RED}cancel{bcolors.GREEN} - {self.translate_string('cancel')}.\n{'_' * 80}"
+                    string += "\n".join(f"{'  '}{self.RED}{key}{self.GREEN} - {self.translate_string(value['description'])}" for key, value in self.actions[self.module_chosen].items()) + f"\n{'  '}{self.RED}back{self.GREEN} - {self.translate_string('return_to_main')}. \n{'  '}{self.RED}leave{self.GREEN} - {self.translate_string('exit')}. \n{'  '}{self.RED}cancel{self.GREEN} - {self.translate_string('cancel')}.\n{'_' * 80}"
                     print(string)
         
                     style = Style.from_dict({
@@ -213,7 +214,7 @@ class InputManager(Id_format, Translate):
                             silent_restart = None
                             for k,v in value.items():
                                 while True:
-                                    argument = input(f"{bcolors.CYAN}{v}" + f':   {bcolors.RED}')
+                                    argument = input(f"{self.CYAN}{v}" + f':   {self.RED}')
                                     if argument.strip().lower() == 'leave':
                                         self.say_goodbye()
                                         return 'leave'

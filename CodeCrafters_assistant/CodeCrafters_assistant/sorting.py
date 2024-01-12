@@ -1,4 +1,4 @@
-from CodeCrafters_assistant.utils import bcolors, Translate
+from CodeCrafters_assistant.utils import Translate
 from pathlib import Path
 
 
@@ -56,14 +56,14 @@ class FileSorter(Translate):
         # Перевіряємо, чи існує директорія та чи це директорія
         if not source_path.exists() or not source_path.is_dir():
             # Повертаємо повідомлення про помилку, якщо директорія недійсна
-            return f"{bcolors.RED}{arg1}{self.translate_string('invalid_path','green')}"
+            return f"{self.RED}{arg1}{self.translate_string('invalid_path','green')}"
 
         # Створюємо об'єкт Path для директорії призначення
         destination_path = Path(arg2)
         # Перевіряємо, чи існує директорія та чи це директорія
         if not destination_path.exists() or not destination_path.is_dir():
             # Повертаємо повідомлення про помилку, якщо директорія недійсна
-            return f"{bcolors.RED}{arg2}{self.translate_string('invalid_path','green')}"
+            return f"{self.RED}{arg2}{self.translate_string('invalid_path','green')}"
 
         # Якщо директорії коректні, викликаємо метод real_sorter з правильними директоріями
         self.real_sorter(source_path, destination_path)

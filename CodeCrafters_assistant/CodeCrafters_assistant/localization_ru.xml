@@ -8,6 +8,7 @@
    		<confirm_long text="Да"/>
    		<deny text="Н"/>
    		<deny_long text="Нет"/>
+   		<stop text="Стоп"/>
    		<change_language_desc text="Устанавливает язык программы."/>
    		<change_language_list text="Список доступних языков:"/>
    		<change_module_desc text="Позволяет переключиться на другое меню."/>
@@ -31,7 +32,7 @@
 
    		<return_to_main text="Вернуться в главное меню"/>
    		<exit text="Выйти из программы"/>
-   		<cancel text="Отменяет выполнение текущей комманды (например, create/edit/sort_files)"/>
+   		<cancel text="Отменяет выполнение текущей команды (например, create/edit/sort_files)"/>
    		<goodbye text="До свидания!"/>
    		<select_language text="Пожалуйста, выберите язык"/>
    		<select_module text="Пожалуйста, выберите меню"/>
@@ -51,6 +52,9 @@
    		<enter_edit text="что вы собираетесь редактировать"/>
    		<enter_remove text="что вы собираетесь удалить"/>
    		<enter_new_text text="новый текст"/>
+
+   		<list_empty text="Нет сохранённых записей!"/>
+   		<record_id_not_found text="Записи с таким id нет, попробуйте ещё раз!"/>
 	</default>
 	<contact_book>
 		<!--Contact manager-specific commands start-->
@@ -98,24 +102,30 @@
    		<not_found_birthdays_p0 text="Нет контактов, у которых день рождения в течение следующих"/>
    		<not_found_birthdays_p1 text="дней от сегоднешней даты."/>
 
-   		<contact_list_empty text="Список контактов пуст!"/>
-
    		<print_contacts text="Сейчас сохранены такие контакты"/>
 
-   		<print_contact_attr_p0 text="Выберите номер того, что вы хотите редактировать"/>
-   		<print_contact_attr_p1 text="Имя контакта"/>
-   		<print_contact_attr_p2 text="День рождения"/>
-   		<print_contact_attr_p3 text="Електронную почту"/>
-   		<print_contact_attr_p4 text="Адрес"/>
-   		<print_contact_attr_p5 text="Номера телефонов"/>
-   		<print_contact_attr_p5_1 text="Номер телефона"/>
+   		<print_attributes text="Выберите номер того, что вы хотите редактировать"/>
+   		<print_attr_0 text="Имя контакта"/>
+   		<print_attr_1 text="День рождения"/>
+   		<print_attr_2 text="Електронную почту"/>
+   		<print_attr_3 text="Адрес"/>
+   		<print_attr_4 text="Номера телефонов"/>
+   		<print_attr_4_1 text="Номер телефона"/>
 
-   		<contact_attr_p1 text="Имя"/>
-   		<contact_attr_p2 text="День рождения"/>
-   		<contact_attr_p3 text="Електронная почта"/>
-   		<contact_attr_p4 text="Адрес"/>
-   		<contact_attr_p5 text="Номера телефонов"/>
-   		<contact_attr_p5_1 text="Номер телефона"/>
+   		<attr_0 text="Имя"/>
+   		<attr_1 text="День рождения"/>
+   		<attr_2 text="Електронная почта"/>
+   		<attr_3 text="Адрес"/>
+   		<attr_4 text="Номера телефонов"/>
+   		<attr_4_1 text="Номер телефона"/>
+
+   		<search_attributes text="Выберите, где вы хотите искать текст"/>
+   		<search_attr_0 text="В именах."/>
+   		<search_attr_1 text="В днях рождения."/>
+   		<search_attr_2 text="В електронных почтах."/>
+   		<search_attr_3 text="В адресах."/>
+   		<search_attr_4 text="В телефонах."/>
+   		<search_attr_5 text="Везде."/>
 
    		<contact_attr_add_p1 text="Контакт создан с именем"/>
    		<contact_attr_add_p2 text="днём рождения"/>
@@ -134,7 +144,6 @@
    		<remove_attribute_ask_p0 text="Вы действительно хотите удалить"/>
    		<remove_attribute_ask_p1 text="контакта?"/>
 		
-   		<contact_id_not_found text="Контакта с таким id нет, попробуйте ещё раз!"/>
    		<negative_id_error text="Id не может быть отрицательным числом!"/>
    		<wrong_id_error text="Некорректный id, попробуйте ещё раз!"/>
 
@@ -146,14 +155,6 @@
    		<contact_remove_submit text="Вы точно уверены, что хотите удалить этот контакт:"/>
    		<phone_removed text="Телефон удалён."/>
 
-   		<print_find_modules_p0 text="Выберите, где вы хотите искать текст"/>
-   		<print_find_modules_p1 text="В именах."/>
-   		<print_find_modules_p2 text="В днях рождения."/>
-   		<print_find_modules_p3 text="В електронных почтах."/>
-   		<print_find_modules_p4 text="В адресах."/>
-   		<print_find_modules_p5 text="В телефонах."/>
-   		<print_find_modules_p6 text="Везде."/>
-
    		<find_hub_fail text="Указанный текст не найден"/>
    		<find_hub_intro text="Указанный текст найден в следующих контактах"/>
 		<!--Contact manager-specific commands end-->
@@ -162,11 +163,10 @@
 		<!--Record manager-specific commands start-->
    		<unnamed_contact text="Безымянный контакт"/>
    		<none text="нет"/>
-   		<record_name text="Имя записи"/>
    		<no_birthday text="День рождения в записи отсутствует. Пожалуйста, воспользуйтесь функцией добавления дня рождения!"/>
    		<no_email text="Электронная почта в записи отсутствует. Пожалуйста, воспользуйтесь функцией добавления электронной почты!"/>
    		<phone_added_p0 text="Телефон добавлен. Если желаете добавить ещё один, введите его в консоль. Когда добавите все, которые хотели, просто пропишите '"/>
-   		<phone_added_p1 text="stop"/>
+   		<phone_added_p1 text="N"/>
    		<phone_added_p2 text="' в консоль."/>
    		<phone_not_found text="Этот телефон в выбранном контакте не найден!"/>
 
@@ -204,12 +204,15 @@
    		<none text="нет"/>
 
    		<print_notes text="Сейчас сохранены такие заметки"/>
-   		<print_note_attr text="Выберите номер того, что вы хотите редактировать"/>
+   		<print_attributes text="Выберите номер того, что вы хотите редактировать"/>
+   		<print_attr_0 text="Заголовок"/>
+   		<print_attr_1 text="Текст"/>
+   		<print_attr_2 text="Теги"/>
 
-   		<note_attr_p0 text="Заголовок"/>
-   		<note_attr_p1 text="Текст"/>
-   		<note_attr_p2 text="Теги"/>
-   		<note_attr_p2_1 text="Тег"/>
+   		<attr_0 text="Заголовок"/>
+   		<attr_1 text="Текст"/>
+   		<attr_2 text="Теги"/>
+   		<attr_2_1 text="Тег"/>
 
    		<what_to_delete_p0 text="Что вы хотите удалить:"/>
    		<what_to_delete_p1 text="Саму заметку."/>
@@ -247,9 +250,7 @@
    		<choose_tag_to_del text="тег, который вы собираетесь удалить"/>
    		<show_all_desc text="Выводит все заметки, которые есть в памяти."/>
 
-   		<note_list_empty text="Список заметок пуст!"/>
    		<choose_what_to_edit text="Выберите, что вы хотите редактировать"/>
-   		<note_id_not_found text="Заметки с таким id нет, попробуйте ещё раз!"/>
    		<edited text="отредактирован."/>
    		<choose_the_tag text="Выберите нужный тег"/>
    		<no_tags_error text="Заметка не имеет тегов!"/>
@@ -257,11 +258,11 @@
    		<note_remove_abort text="Удаление отменено."/>
    		<note_remove_submit text="Вы точно уверены, что хотите удалить эту заметку:"/>
 
-   		<search_attr_p0 text="Выберите, где вы хотите искать текст"/>
-   		<search_attr_p1 text="В заголовках."/>
-   		<search_attr_p2 text="В тексте."/>
-   		<search_attr_p3 text="В тегах."/>
-   		<search_attr_p4 text="Везде."/>
+   		<search_attributes text="Выберите, где вы хотите искать текст"/>
+   		<search_attr_0 text="В заголовках."/>
+   		<search_attr_1 text="В тексте."/>
+   		<search_attr_2 text="В тегах."/>
+   		<search_attr_3 text="Везде."/>
 
    		<find_failure text="Указанный текст не найден!"/>
    		<find_intro text="Указанный текст найден в следующих заметках"/>

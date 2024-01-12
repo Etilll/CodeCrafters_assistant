@@ -111,7 +111,7 @@ class Record(MiscChecks, BirthdayChecks):
             self.data = {'Name':"Unnamed contact",'Birthday':"None",'Email':"None",'Address':"None",'Phones':{}}
 
     def __str__(self):
-        return f"{self.translate_string('record_name','red','green')}: {self.data['Name']}, {self.translate_string('contact_attr_p2','red','green')}: {self.data['Birthday']}, {self.translate_string('contact_attr_p3','red','green')}: {self.data['Email']}, {self.translate_string('contact_attr_p4','red','green')}: {self.data['Address']}, {self.translate_string('contact_attr_p5','red','green')}: {'; '.join(phone for phone in self.data['Phones'].values())}"
+        return f"{self.translate_string('attr_0','red','green')}: {self.data['Name']}; {self.translate_string('attr_1','red','green')}: {self.data['Birthday']}; {self.translate_string('attr_2','red','green')}: {self.data['Email']}; {self.translate_string('attr_3','red','green')}: {self.data['Address']}; {self.translate_string('attr_4','red','green')}: {'; '.join(phone for phone in self.data['Phones'].values())}"
 
     def record_error(func):
         #print(func.__name__)
@@ -163,11 +163,11 @@ class Record(MiscChecks, BirthdayChecks):
     def phone_check_and_set(self,mode,phone,new_phone=None):
         try:
             if mode == 'add':
-                if phone.lower() == "stop" or phone.lower() == "n":
+                if phone.lower() == "stop" or phone.lower() in self.parent.stop:
                     return True
                 phone = self.p_check(phone)
                 self.data['Phones'][len(self.data['Phones'])] = phone
-                raise ValueError(f"{self.translate_string('phone_added_p0','yellow','red')}{self.translate_string('phone_added_p1')}{self.translate_string('phone_added_p2','yellow','green')}")
+                raise ValueError(f"{self.translate_string('phone_added_p0','yellow','red')}{self.parent.stop[0]}{self.translate_string('phone_added_p2','yellow','green')}")
             elif mode == 'ed':
                 if self.has_phone(phone):
                     if type(self.p_check(new_phone)) == str:

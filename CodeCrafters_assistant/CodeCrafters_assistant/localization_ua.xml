@@ -8,7 +8,7 @@
    		<confirm_long text="Так"/>
    		<deny text="Н"/>
    		<deny_long text="Ні"/>
-   		<local_not_found_1 text="Запис"/>
+   		<stop text="Стоп"/>
    		<change_language_desc text="Встановлює мову програми."/>
    		<change_language_list text="Список доступних мов:"/>
    		<change_module_desc text="Дозволяє переключитись на інше меню."/>
@@ -52,6 +52,9 @@
    		<enter_edit text="що ви збираєтесь редагувати"/>
    		<enter_remove text="що ви збираєтесь видалити"/>
    		<enter_new_text text="новий текст"/>
+
+   		<list_empty text="Немає збережених записів!"/>
+   		<record_id_not_found text="Запису з таким id немаэ, спробуйте ще раз!"/>
 	</default>
 	<contact_book>
 		<!--Contact manager-specific commands start-->
@@ -98,24 +101,22 @@
    		<not_found_birthdays_p0 text="Немає контактів у яких день народження протягом наступних"/>
    		<not_found_birthdays_p1 text="днів від сьогоднішньої дати."/>
 
-   		<contact_list_empty text="Список контактів порожній!"/>
-
    		<print_contacts text="Наразі збережені такі контакти"/>
 
-   		<print_contact_attr_p0 text="Оберіть номер того, що ви хочете редагувати"/>
-   		<print_contact_attr_p1 text="Ім'я контакту"/>
-   		<print_contact_attr_p2 text="День народження"/>
-   		<print_contact_attr_p3 text="Електронну пошту"/>
-   		<print_contact_attr_p4 text="Адресу"/>
-   		<print_contact_attr_p5 text="Номера телефонів"/>
-   		<print_contact_attr_p5_1 text="Номер телефона"/>
+   		<print_attributes text="Оберіть номер того, що ви хочете редагувати"/>
+   		<print_attr_0 text="Ім'я контакту"/>
+   		<print_attr_1 text="День народження"/>
+   		<print_attr_2 text="Електронну пошту"/>
+   		<print_attr_3 text="Адресу"/>
+   		<print_attr_4 text="Номера телефонів"/>
+   		<print_attr_4_1 text="Номер телефона"/>
 
-   		<contact_attr_p1 text="Ім'я"/>
-   		<contact_attr_p2 text="День народження"/>
-   		<contact_attr_p3 text="Електронна пошта"/>
-   		<contact_attr_p4 text="Адреса"/>
-   		<contact_attr_p5 text="Номера телефонів"/>
-   		<contact_attr_p5_1 text="Номер телефона"/>
+   		<attr_0 text="Ім'я"/>
+   		<attr_1 text="День народження"/>
+   		<attr_2 text="Електронна пошта"/>
+   		<attr_3 text="Адреса"/>
+   		<attr_4 text="Номера телефонів"/>
+   		<attr_4_1 text="Номер телефона"/>
 
    		<contact_attr_add_p1 text="Контакт створено з ім'ям"/>
    		<contact_attr_add_p2 text="днем народження"/>
@@ -134,7 +135,6 @@
    		<remove_attribute_ask_p0 text="Ви дійсно хочете видалити"/>
    		<remove_attribute_ask_p1 text="контакта?"/>
 
-   		<contact_id_not_found text="Контакту з таким id немає, спробуйте ще раз!"/>
    		<negative_id_error text="Id не може бути від'ємним числом!"/>
    		<wrong_id_error text="Некоректний id, спробуйте ще раз!"/>
 
@@ -162,7 +162,6 @@
 		<!--Record manager-specific commands start-->
    		<unnamed_contact text="Безіменний контакт"/>
    		<none text="немає"/>
-   		<record_name text="Назва запису"/>
    		<no_birthday text="День народження у записі відсутній. Будь ласка, скористайтеся функцією додавання дня народження!"/>
    		<no_email text="Електронна пошта у записі відсутня. Будь ласка, скористайтеся функцією додавання дня електронної пошти!"/>
    		<phone_added_p0 text="Телефон додано. Якщо бажаєте додати ще один, введіть його у консоль. Коли додасте всі, що хотіли, просто пропишіть '"/>
@@ -204,12 +203,15 @@
    		<none text="немає"/>
 
    		<print_notes text="Наразі збережені такі нотатки"/>
-   		<print_note_attr text="Оберіть номер того, що ви хочете редагувати"/>
+   		<print_attributes text="Оберіть номер того, що ви хочете редагувати"/>
+   		<print_attr_0 text="Заголовок"/>
+   		<print_attr_1 text="Текст"/>
+   		<print_attr_2 text="Теги"/>
 
-   		<note_attr_p0 text="Заголовок"/>
-   		<note_attr_p1 text="Текст"/>
-   		<note_attr_p2 text="Теги"/>
-   		<note_attr_p2_1 text="Тег"/>
+   		<attr_0 text="Заголовок"/>
+   		<attr_1 text="Текст"/>
+   		<attr_2 text="Теги"/>
+   		<attr_2_1 text="Тег"/>
 
    		<what_to_delete_p0 text="Що ви хочете видалити:"/>
    		<what_to_delete_p1 text="Саму нотатку."/>
@@ -247,9 +249,7 @@
    		<choose_tag_to_del text="тег, який ви збираєтеся видалити"/>
    		<show_all_desc text="Виводить всі нотатки, які є в пам'яті."/>
 
-   		<note_list_empty text="Список нотаток порожній!"/>
    		<choose_what_to_edit text="Оберіть, що ви хочете редагувати"/>
-   		<note_id_not_found text="Нотатки з таким id немає, спробуйте ще раз!"/>
    		<edited text="відредагований."/>
    		<choose_the_tag text="Оберіть потрібний тег"/>
    		<no_tags_error text="Нотатка не має тегів!"/>

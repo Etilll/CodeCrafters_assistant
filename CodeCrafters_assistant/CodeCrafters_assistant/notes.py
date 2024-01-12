@@ -1,4 +1,4 @@
-from CodeCrafters_assistant.utils import Utils, Translate, DialogueActions, DialogueChecks
+from CodeCrafters_assistant.utils import AbstractManager, Utils, Translate, DialogueActions, DialogueChecks
 from re import search
 
 class DialogueBranches:
@@ -320,7 +320,7 @@ class Note(NoteChecks, Translate):
         return f"{self.translate_string('attr_0','red','green')}: {self.data['Title']}; {self.translate_string('attr_1','red','green')}: {self.data['Text']}; {self.translate_string('attr_2','red','green')}: {'; '.join(tag for tag in self.data['Tags'].values())};"
 
 
-class NoteBook(NoteBookActions, NoteBookChecks, DialogueBranches, Utils, Translate):
+class NoteBook(AbstractManager, NoteBookActions, NoteBookChecks, DialogueBranches, Utils, Translate):
     def __init__(self, parent_class):
         self.parent = parent_class
         self.parent.modules.append(self)

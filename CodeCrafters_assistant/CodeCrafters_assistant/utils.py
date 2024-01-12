@@ -10,6 +10,25 @@ class IdFormat:
         except ValueError:
             return self.translate_string('wrong_id_error','yellow','green')
 
+class AbstractManager:
+    def __init__(self):
+        raise ValueError("Not implemented")
+    
+    def create_starter(self):
+        raise ValueError("Not implemented")
+
+    def edit_starter(self):
+        raise ValueError("Not implemented")
+
+    def remove_starter(self):
+        raise ValueError("Not implemented")
+
+    def show_all_starter(self):
+        raise ValueError("Not implemented")
+
+    def find_starter(self):
+        raise ValueError("Not implemented")
+
 class ListConstructor: #shall never be called from the record class
     def get_data(self, record_id:int, mode=None):
         elements = {}

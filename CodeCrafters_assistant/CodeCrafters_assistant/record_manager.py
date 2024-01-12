@@ -138,28 +138,6 @@ class Record(MiscChecks, BirthdayChecks):
     def add_address(self,address:str):
         self.data['Address'] = address
 
-    @record_error
-    def edit_birthday(self,new_birthday:str):
-        if self.data['Birthday'] != "None":
-            self.data['Birthday'] = self.birthday_check(new_birthday)
-        
-        raise ValueError(self.translate_string('no_birthday','yellow','green'))
-
-    @record_error
-    def edit_email(self,new_email:str):
-        if self.data['Email'] != "None":
-                self.data['Email'] = self.email_check(new_email)
-
-        raise ValueError(self.translate_string('no_email','yellow','green'))
-
-    @record_error
-    def edit_name(self,name:str):
-        self.data['Name'] = name
-
-    @record_error
-    def edit_address(self,address:str):
-        self.data['Address'] = address
-
     def phone_check_and_set(self,mode,phone,new_phone=None):
         try:
             if mode == 'add':

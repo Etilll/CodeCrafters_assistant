@@ -1,5 +1,5 @@
 from datetime import date,datetime,timedelta
-from CodeCrafters_assistant.utils import Utils, Translate, DialogueActions, DialogueChecks
+from CodeCrafters_assistant.utils import AbstractManager, Utils, Translate, DialogueActions, DialogueChecks
 
 class DialogueBranches:
     def set_edit_object(self, *args):
@@ -225,7 +225,7 @@ class ContactBookChecks(DialogueChecks):
         else:
             return self.translate_string('wrong_id_error','yellow','green')
 
-class ContactBook(ContactBookActions, ContactBookChecks, DialogueBranches, Utils, Translate):
+class ContactBook(AbstractManager, ContactBookActions, ContactBookChecks, DialogueBranches, Utils, Translate):
     def __init__(self, parent_class):
         self.parent = parent_class
         self.parent.modules.append(self)

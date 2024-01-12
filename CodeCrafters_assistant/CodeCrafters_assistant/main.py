@@ -102,7 +102,7 @@ class InputManager(IdFormat, Translate):
     def set_module(self,module_id):
         try:
             module_id = self.input_to_id(module_id)
-            if module_id < len(self.modules):
+            if type(module_id) == int and module_id < len(self.modules):
                 self.module_chosen = module_id
                 self.actions['default']["back"] = {
                                             'description':"change_module_desc", 
@@ -117,6 +117,8 @@ class InputManager(IdFormat, Translate):
 
                 self.command_completer = WordCompleter(self.current_module_commands)
                 self.command = ''
+            elif type(module_id) == str:
+                print(module_id)
             else:
                 print(self.translate_string('wrong_module_number','yellow','green'))
         except ValueError:

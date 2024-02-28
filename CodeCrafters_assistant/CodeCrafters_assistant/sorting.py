@@ -44,8 +44,8 @@ class FileSorter(Translate):
                                 'description':"sort_files_desc", 
                                 'methods':{
                                     self.starter:{
-                                        'input':f"{self.translate_string('enter_input_folder','green')} {path}"},
-                                        'output':f"{self.translate_string('enter_output_folder','green')} {path}"}}}
+                                        'input':f"{self.translate_string('enter_input_folder','green')} {path}",
+                                        'output':f"{self.translate_string('enter_output_folder','green')} {path}"}}}}
     
         if mode != 'first':
             self.parent.module_chosen = tmp
